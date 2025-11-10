@@ -29,7 +29,7 @@ export default function Navbar({ theme, setTheme }) {
       {/* 🔹 Logo Image sa kaliwa */}
       <div className="flex items-center gap-2">
         <img
-          src="/src/assets/logo.png" // ← Palitan mo ito kung ibang file name
+          src="/src/assets/logocj.png" // ← Palitan mo ito kung ibang file name
           alt="Logo"
           className="w-10 h-10 rounded-full object-cover shadow-md cursor-pointer"
           onClick={() => scrollTo("home")}
