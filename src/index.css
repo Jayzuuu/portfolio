@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 html, body {
-  scroll-behavior: smooth;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -11,11 +10,17 @@ section {
   scroll-margin-top: 80px;
 }
 
-/* --- Card Flip Animation Support --- */
 .perspective {
   perspective: 1000px;
 }
 
 .backface-hidden {
   backface-visibility: hidden;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
 }

@@ -55,21 +55,20 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="min-h-screen flex flex-col items-center justify-center px-6 md:px-20 py-10 pt-20 bg-white dark:bg-[#0f111a] transition-colors duration-300"
+      className="min-h-screen flex flex-col items-center justify-center px-6 md:px-20 py-24 md:py-32 pt-32 bg-white dark:bg-[#0f111a] transition-colors duration-300"
     >
-      <h2 className="text-4xl font-bold text-purple-500">Projects</h2>
+      <h2 className="text-4xl font-display font-bold text-purple-500">Projects</h2>
       <div className="w-16 h-1 bg-purple-500 rounded mt-2 mb-8" />
 
-      {/* Filter Bar */}
-      <div className="flex flex-wrap gap-3 mb-10 justify-center">
+      <div className="flex flex-wrap gap-3 mb-12 justify-center">
         {filters.map((f) => (
           <button
             key={f}
             onClick={() => setActiveFilter(f)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition ${
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition cursor-hover ${
               activeFilter === f
                 ? "bg-purple-500 text-white"
-                : "border border-purple-400 text-purple-400 hover:bg-purple-500 hover:text-white"
+                : "border border-purple-400/60 text-purple-400 hover:bg-purple-500 hover:text-white"
             }`}
           >
             {f}
@@ -77,22 +76,20 @@ export default function Projects() {
         ))}
       </div>
 
-      {/* Featured FlipCard */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="w-full max-w-5xl mb-12 flex flex-col items-center"
+        className="w-full max-w-6xl mb-16 flex flex-col items-center"
       >
-        <span className="text-sm font-semibold uppercase tracking-widest text-purple-400 mb-4">
+        <span className="text-sm font-semibold uppercase tracking-widest text-purple-400 mb-6">
           Featured — Calling Card Design
         </span>
         <FlipCard />
       </motion.div>
 
-      {/* Projects Grid */}
-      <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+      <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 w-full max-w-6xl">
         {filtered.map((p, i) => (
           <motion.div
             key={p.title}
@@ -102,25 +99,29 @@ export default function Projects() {
             viewport={{ once: true }}
             whileHover={{ scale: 1.02 }}
             onClick={() => setSelected(p)}
-            className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-100 dark:border-purple-800 overflow-hidden cursor-pointer hover:shadow-lg hover:shadow-purple-500/20 transition-shadow"
+            className={`bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-100/80 dark:border-purple-800/60 overflow-hidden cursor-pointer hover:shadow-lg hover:shadow-purple-500/20 transition-shadow cursor-hover flex flex-col ${
+              i === 0 ? "md:col-span-2 md:row-span-2" : "md:col-span-1"
+            }`}
           >
             <img
               src={p.image}
               alt={p.title}
-              className="w-full h-40 sm:h-52 md:h-48 lg:h-52 object-cover"
+              className={`w-full object-cover ${
+                i === 0 ? "h-56 md:h-full md:min-h-[280px]" : "h-40"
+              }`}
             />
-            <div className="p-4 flex flex-col items-center text-center">
-              <h3 className="text-xl font-semibold text-purple-500 mb-2">
+            <div className="p-5 flex flex-col flex-1">
+              <h3 className="text-lg font-semibold text-purple-500 mb-2">
                 {p.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2 flex-1">
                 {p.desc}
               </p>
-              <div className="flex flex-wrap gap-2 justify-center mt-auto">
-                {p.tags.map((tag) => (
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {p.tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-0.5 text-xs rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 border border-purple-200 dark:border-purple-700"
+                    className="px-2 py-0.5 text-xs rounded-full text-purple-600 dark:text-purple-300 border border-purple-200/60 dark:border-purple-700/50"
                   >
                     {tag}
                   </span>
@@ -131,7 +132,6 @@ export default function Projects() {
         ))}
       </div>
 
-      {/* Modal */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -146,11 +146,11 @@ export default function Projects() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white dark:bg-gray-900 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-purple-200 dark:border-purple-800 shadow-2xl"
+              className="relative bg-white dark:bg-gray-900 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-purple-100/80 dark:border-purple-800/60 shadow-2xl"
             >
               <button
                 onClick={() => setSelected(null)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-purple-500 text-white hover:bg-purple-600 transition z-10 text-lg font-bold"
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-purple-500 text-white hover:bg-purple-600 transition z-10 text-lg font-bold cursor-hover"
                 aria-label="Close"
               >
                 ×
@@ -168,10 +168,10 @@ export default function Projects() {
                   {selected.desc}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {selected.tags.map((tag) => (
+                  {selected.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 text-sm rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 border border-purple-200 dark:border-purple-700"
+                      className="px-3 py-1 text-sm rounded-full text-purple-600 dark:text-purple-300 border border-purple-200/60 dark:border-purple-700/50"
                     >
                       {tag}
                     </span>

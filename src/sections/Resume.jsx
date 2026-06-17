@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { FaDownload } from "react-icons/fa";
+import { Briefcase, Download } from "lucide-react";
+import MagneticButton from "../components/MagneticButton";
 
 const education = [
   {
@@ -60,10 +61,10 @@ const experience = [
 ];
 
 const achievements = [
-  "🏆 Best Capstone Project — City College of San Jose del Monte, 2025",
-  "🎮 Best Game Project — City College of San Jose del Monte, 2025",
-  "🥇 Best EMC Project — City College of San Jose del Monte, 2025",
-  "⭐ Most Popular Project — City College of San Jose del Monte, 2025",
+  "Best Capstone Project — City College of San Jose del Monte, 2025",
+  "Best Game Project — City College of San Jose del Monte, 2025",
+  "Best EMC Project — City College of San Jose del Monte, 2025",
+  "Most Popular Project — City College of San Jose del Monte, 2025",
 ];
 
 const competencies = [
@@ -96,20 +97,20 @@ function TimelineEntry({ item, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className={`relative flex w-full mb-10 pl-12 md:pl-0 ${
+      className={`relative flex w-full mb-12 pl-12 md:pl-0 ${
         isEven ? "md:justify-start" : "md:justify-end"
       }`}
     >
-      <div
-        className={`absolute left-[13px] md:left-1/2 top-6 w-4 h-4 rounded-full bg-purple-500 border-4 border-white dark:border-[#0f111a] z-10 md:-translate-x-1/2`}
-      />
+      <div className="absolute left-[11px] md:left-1/2 top-6 w-8 h-8 rounded-full bg-purple-500 border-4 border-white dark:border-[#0f111a] z-10 md:-translate-x-1/2 flex items-center justify-center">
+        <Briefcase size={14} strokeWidth={2} className="text-white" />
+      </div>
 
       <div
         className={`w-full md:w-[calc(50%-2rem)] ${
           isEven ? "md:pr-10 md:text-right" : "md:pl-10"
         }`}
       >
-        <div className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-100 dark:border-purple-800 p-5 hover:shadow-lg hover:shadow-purple-500/20 transition-shadow">
+        <div className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-100/80 dark:border-purple-800/60 p-5 hover:shadow-lg hover:shadow-purple-500/20 transition-shadow cursor-hover">
           <div
             className={`flex gap-4 ${
               isEven ? "md:flex-row-reverse md:text-right" : ""
@@ -118,7 +119,7 @@ function TimelineEntry({ item, index }) {
             <img
               src={item.img}
               alt={title}
-              className="w-12 h-12 rounded-full object-cover border-2 border-purple-500 shrink-0"
+              className="w-12 h-12 rounded-full object-cover border border-purple-500 shrink-0"
             />
             <div className="flex-1">
               <h4 className="text-lg font-bold text-purple-500">{title}</h4>
@@ -149,16 +150,15 @@ export default function Resume() {
   return (
     <section
       id="resume"
-      className="min-h-screen flex flex-col items-center px-8 py-20 gap-12 relative overflow-hidden bg-white dark:bg-[#0f111a] transition-colors duration-300"
+      className="min-h-screen flex flex-col items-center px-8 py-24 md:py-32 gap-12 relative overflow-hidden bg-white dark:bg-[#0f111a] transition-colors duration-300"
     >
       <div className="absolute -top-10 -left-10 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl dark:bg-purple-700/30" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-300/30 rounded-full blur-3xl dark:bg-purple-800/30" />
 
       <div className="relative z-10 w-full max-w-5xl">
-        <h2 className="text-4xl font-bold text-purple-500 text-center">Resume</h2>
-        <div className="w-16 h-1 bg-purple-500 rounded mt-2 mb-8 mx-auto" />
+        <h2 className="text-4xl font-display font-bold text-purple-500 text-center">Resume</h2>
+        <div className="w-16 h-1 bg-purple-500 rounded mt-2 mb-12 mx-auto" />
 
-        {/* Timeline */}
         <div className="relative">
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-purple-500 md:-translate-x-1/2" />
           {allTimeline.map((item, i) => (
@@ -166,8 +166,7 @@ export default function Resume() {
           ))}
         </div>
 
-        {/* Achievements */}
-        <h3 className="text-2xl font-bold text-purple-500 mb-6 mt-12 text-center">
+        <h3 className="text-2xl font-display font-bold text-purple-500 mb-6 mt-16 text-center">
           Achievements
         </h3>
         <div className="flex flex-col gap-3 max-w-2xl mx-auto">
@@ -178,15 +177,14 @@ export default function Resume() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.05 }}
               viewport={{ once: true }}
-              className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md px-5 py-3 rounded-xl border border-purple-100 dark:border-purple-800 text-gray-700 dark:text-gray-300 text-sm"
+              className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md px-5 py-3 rounded-xl border border-purple-100/80 dark:border-purple-800/60 text-gray-700 dark:text-gray-300 text-sm"
             >
               {a}
             </motion.div>
           ))}
         </div>
 
-        {/* Core Competencies */}
-        <h3 className="text-2xl font-bold text-purple-500 mb-6 mt-12 text-center">
+        <h3 className="text-2xl font-display font-bold text-purple-500 mb-6 mt-16 text-center">
           Core Competencies
         </h3>
         <div className="grid md:grid-cols-2 gap-6">
@@ -197,14 +195,14 @@ export default function Resume() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-100 dark:border-purple-800 p-5"
+              className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-100/80 dark:border-purple-800/60 p-5"
             >
               <h4 className="font-semibold text-purple-500 mb-3">{group.label}</h4>
               <div className="flex flex-wrap gap-2">
                 {group.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 text-xs rounded-full border border-purple-200 dark:border-purple-700 text-purple-600 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/30"
+                    className="px-3 py-1 text-xs rounded-full border border-purple-200/60 dark:border-purple-700/50 text-purple-600 dark:text-purple-300"
                   >
                     {tag}
                   </span>
@@ -215,15 +213,16 @@ export default function Resume() {
         </div>
       </div>
 
-      <motion.a
-        href="/resume/CJResume.pdf"
-        download
-        whileHover={{ scale: 1.02 }}
-        className="mt-4 inline-flex items-center rounded-xl px-6 py-3 bg-purple-500 text-white hover:bg-purple-600 transition font-semibold relative z-10 shadow-lg shadow-purple-500/20"
-      >
-        <FaDownload className="mr-2" />
-        Download My Resume
-      </motion.a>
+      <MagneticButton>
+        <a
+          href="/resume/CJResume.pdf"
+          download
+          className="mt-4 inline-flex items-center rounded-xl px-6 py-3 bg-purple-500 text-white hover:bg-purple-600 transition font-semibold relative z-10 shadow-lg shadow-purple-500/20 cursor-hover"
+        >
+          <Download size={20} strokeWidth={1.75} className="mr-2" />
+          Download My Resume
+        </a>
+      </MagneticButton>
     </section>
   );
 }

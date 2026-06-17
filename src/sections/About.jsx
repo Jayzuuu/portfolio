@@ -1,19 +1,20 @@
 import { motion } from "framer-motion";
+import { Box, Monitor, Code2 } from "lucide-react";
 import profilePic from "../assets/profilepic.jpg";
 
 const highlights = [
   {
-    icon: "🎨",
+    Icon: Box,
     title: "3D & Visualization",
     tools: "Blender, SketchUp, D5 Render",
   },
   {
-    icon: "🖥️",
+    Icon: Monitor,
     title: "Design & Production",
     tools: "Photoshop, Premiere Pro, After Effects",
   },
   {
-    icon: "💻",
+    Icon: Code2,
     title: "Development",
     tools: "Unity, Web Dev, Game Dev",
   },
@@ -23,7 +24,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="min-h-screen w-full flex flex-col md:flex-row items-center justify-center px-8 md:px-20 gap-16 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300"
+      className="min-h-screen w-full flex flex-col md:flex-row items-center justify-center px-8 md:px-20 gap-16 py-24 md:py-32 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -32,7 +33,7 @@ export default function About() {
         viewport={{ once: true }}
         className="flex-1 flex flex-col justify-center max-w-lg"
       >
-        <h2 className="text-4xl font-bold text-purple-500">About Me</h2>
+        <h2 className="text-4xl font-display font-bold text-purple-500">About Me</h2>
         <div className="w-16 h-1 bg-purple-500 rounded mt-2 mb-8" />
         <p className="text-lg text-gray-900 dark:text-gray-200 leading-relaxed mb-4">
           I'm a <strong>Multimedia Specialist</strong> and Founder of{" "}
@@ -54,10 +55,14 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-200 dark:border-purple-800 p-4 hover:scale-105 transition"
+              whileHover={{ scale: 1.02 }}
+              className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-100/80 dark:border-purple-800/60 p-5 transition cursor-hover"
             >
-              <div className="text-2xl mb-2">{card.icon}</div>
+              <card.Icon
+                size={22}
+                strokeWidth={1.75}
+                className="text-purple-500 mb-3"
+              />
               <h3 className="font-semibold text-purple-500 text-sm mb-1">
                 {card.title}
               </h3>
@@ -81,7 +86,7 @@ export default function About() {
           <img
             src={profilePic}
             alt="Christian Jay Castro"
-            className="relative w-full h-full object-cover rounded-2xl shadow-xl border-2 border-purple-500/30"
+            className="relative w-full h-full object-cover rounded-2xl shadow-xl border border-purple-500/30"
           />
         </div>
       </motion.div>
