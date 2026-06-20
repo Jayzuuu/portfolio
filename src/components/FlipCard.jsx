@@ -6,7 +6,7 @@ export default function FlipCard() {
   return (
     <div
       style={{ perspective: "1000px" }}
-      className="w-[400px] h-[250px] md:w-[500px] md:h-[300px] cursor-pointer cursor-hover"
+      className="h-[210px] w-full max-w-[500px] cursor-pointer cursor-hover sm:h-[260px] md:h-[300px]"
       onClick={() => setFlipped(!flipped)}
     >
       <div
@@ -20,7 +20,7 @@ export default function FlipCard() {
         {/* Front */}
         <div
           style={{ backfaceVisibility: "hidden" }}
-          className="absolute w-full h-full rounded-2xl shadow-lg overflow-hidden bg-purple-100 dark:bg-purple-900 flex items-center justify-center"
+          className="absolute h-full w-full overflow-hidden rounded-2xl bg-slate-900 shadow-lg"
         >
           <img
             src="/projects/callingcard/frontpic.png"
@@ -33,7 +33,7 @@ export default function FlipCard() {
         {/* Back */}
         <div
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-          className="absolute w-full h-full rounded-2xl shadow-lg overflow-hidden bg-purple-100 dark:bg-purple-900 flex items-center justify-center"
+          className="absolute h-full w-full overflow-hidden rounded-2xl bg-slate-900 shadow-lg"
         >
           <img
             src="/projects/callingcard/backpic.png"

@@ -4,10 +4,21 @@
 
 html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
+  background: #060814;
+  scroll-behavior: smooth;
 }
 
 section {
   scroll-margin-top: 80px;
+}
+
+::selection {
+  background: rgba(103, 232, 249, 0.35);
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh;
 }
 
 .perspective {
@@ -22,5 +33,30 @@ section {
   body.custom-cursor-active,
   body.custom-cursor-active * {
     cursor: none !important;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -38,7 +38,7 @@ export default function App() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="font-sans bg-white dark:bg-[#0f111a] text-gray-900 dark:text-white transition-colors duration-300"
+      className="min-h-screen bg-slate-50 font-sans text-slate-950 transition-colors duration-300 dark:bg-[#080b14] dark:text-white"
     >
       <GrainOverlay />
       <CustomCursor />

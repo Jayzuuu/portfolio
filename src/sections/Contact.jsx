@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Github, Mail, Linkedin, Facebook, Check } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, Facebook, Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import MagneticButton from "../components/MagneticButton";
 
-const socialIcons = {
-  Email: Mail,
-  Facebook: Facebook,
-  LinkedIn: Linkedin,
-  GitHub: Github,
-};
+const socials = [
+  { label: "Email", href: "mailto:christianjaycastro206@gmail.com", Icon: Mail },
+  { label: "Facebook", href: "https://facebook.com/christianjaycastro", Icon: Facebook },
+  { label: "LinkedIn", href: "https://linkedin.com/in/christianjaycastro", Icon: Linkedin },
+  { label: "GitHub", href: "https://github.com/Jayzuuu", Icon: Github },
+];
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -19,128 +19,138 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const mailto = `mailto:christianjaycastro206@gmail.com?subject=Portfolio Inquiry from ${form.name}&body=${encodeURIComponent(form.message)}%0A%0AFrom: ${form.name}%0AEmail: ${form.email}`;
-    window.location.href = mailto;
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${form.name}`);
+    const body = encodeURIComponent(
+      `${form.message}\n\nFrom: ${form.name}\nEmail: ${form.email}`
+    );
+    window.location.href = `mailto:christianjaycastro206@gmail.com?subject=${subject}&body=${body}`;
     setSent(true);
   };
-
-  const socials = [
-    { label: "Email", href: "mailto:christianjaycastro206@gmail.com" },
-    { label: "Facebook", href: "https://facebook.com/christianjaycastro" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/christianjaycastro" },
-    { label: "GitHub", href: "https://github.com/Jayzuuu" },
-  ];
 
   return (
     <section
       id="contact"
-      className="min-h-screen flex flex-col items-center justify-center px-6 md:px-20 py-24 md:py-32 relative overflow-hidden bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300"
+      className="relative overflow-hidden bg-[#060814] px-6 py-24 text-white md:px-12 lg:px-20"
     >
-      <div className="absolute -top-16 -left-16 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl dark:bg-purple-700/30" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-300/30 rounded-full blur-3xl dark:bg-purple-800/30" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(14,165,233,0.18),transparent_30%),radial-gradient(circle_at_90%_40%,rgba(168,85,247,0.2),transparent_28%)]" />
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="relative z-10 w-full max-w-5xl flex flex-col md:flex-row gap-12"
+        transition={{ duration: 0.65 }}
+        viewport={{ once: true, margin: "-80px" }}
+        className="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center"
       >
-        <div className="flex-1 flex flex-col justify-center gap-6">
-          <h2 className="text-4xl font-display font-bold text-purple-500">Contact Me</h2>
-          <div className="w-16 h-1 bg-purple-500 rounded mt-2 mb-2" />
-          <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
-            Open for freelance projects, collaborations, and full-time opportunities.
-            Let's build something great together.
+        <div>
+          <p className="text-sm font-bold uppercase tracking-[0.28em] text-cyan-300">
+            Contact
+          </p>
+          <h2 className="mt-4 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.95] tracking-normal">
+            Need 3D, design, video, or a full creative build?
+          </h2>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+            I am open for freelance projects, collaborations, and creative roles
+            where visual production needs to move fast without losing polish.
           </p>
 
-          <div className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
-            <p>
-              <span className="text-purple-400 font-semibold">Email: </span>
-              <a className="hover:underline" href="mailto:christianjaycastro206@gmail.com">christianjaycastro206@gmail.com</a>
-            </p>
-            <p>
-              <span className="text-purple-400 font-semibold">Phone: </span>
-              <a className="hover:underline" href="tel:+639100121091">+63 910 012 1091</a>
-            </p>
-            <p>
-              <span className="text-purple-400 font-semibold">Location: </span>
+          <div className="mt-8 space-y-4 text-sm text-slate-300">
+            <a
+              href="mailto:christianjaycastro206@gmail.com"
+              className="flex items-center gap-3 transition hover:text-cyan-200 cursor-hover"
+            >
+              <Mail size={19} strokeWidth={1.75} />
+              christianjaycastro206@gmail.com
+            </a>
+            <a
+              href="tel:+639100121091"
+              className="flex items-center gap-3 transition hover:text-cyan-200 cursor-hover"
+            >
+              <Phone size={19} strokeWidth={1.75} />
+              +63 910 012 1091
+            </a>
+            <div className="flex items-center gap-3">
+              <MapPin size={19} strokeWidth={1.75} />
               San Jose Del Monte, Bulacan, Philippines
-            </p>
+            </div>
           </div>
 
-          <div className="flex flex-wrap gap-3 mt-2">
-            {socials.map((s) => {
-              const Icon = socialIcons[s.label];
-              return (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target={s.href.startsWith("mailto") ? undefined : "_blank"}
-                  rel="noreferrer"
-                  className="px-4 py-2 rounded-xl border border-purple-400/60 text-sm text-purple-500 hover:bg-purple-500 hover:text-white transition flex items-center gap-2 cursor-hover"
-                >
-                  <Icon size={20} strokeWidth={1.75} />
-                  {s.label}
-                </a>
-              );
-            })}
+          <div className="mt-8 flex flex-wrap gap-3">
+            {socials.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("mailto") ? undefined : "_blank"}
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-200/60 hover:text-white cursor-hover"
+              >
+                <Icon size={17} strokeWidth={1.75} />
+                {label}
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="flex-1 bg-white/60 dark:bg-gray-900/40 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-purple-100/80 dark:border-purple-800/60">
+        <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.055] p-5 shadow-2xl shadow-black/20 backdrop-blur md:p-8">
           {sent ? (
-            <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
-              <Check size={48} strokeWidth={1.5} className="text-purple-500" />
-              <h3 className="text-2xl font-bold text-purple-500">Message Sent!</h3>
-              <p className="text-gray-500 dark:text-gray-400">
-                Your email client should have opened. I'll get back to you soon.
+            <div className="flex min-h-[360px] flex-col items-center justify-center gap-4 text-center">
+              <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-300 text-slate-950">
+                <Check size={32} strokeWidth={1.8} />
+              </span>
+              <h3 className="font-display text-3xl font-bold">Message prepared</h3>
+              <p className="max-w-sm text-slate-300">
+                Your email client should be open now. Send it there and I will
+                receive the inquiry.
               </p>
               <button
                 onClick={() => setSent(false)}
-                className="mt-4 rounded-xl px-6 py-3 bg-purple-500 text-white hover:bg-purple-600 transition text-sm cursor-hover"
+                className="mt-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold transition hover:bg-white/10 cursor-hover"
               >
-                Send Another
+                Write another
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                Send a Message
-              </h3>
+            <form onSubmit={handleSubmit} className="grid gap-4">
+              <div>
+                <h3 className="font-display text-2xl font-bold">Start a project</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-400">
+                  Tell me what you need and the kind of output you want.
+                </p>
+              </div>
+
               <input
                 name="name"
                 type="text"
-                placeholder="Your Name"
+                placeholder="Your name"
                 required
                 value={form.name}
                 onChange={handleChange}
-                className="px-4 py-3 rounded-xl border border-purple-100 dark:border-purple-700/60 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm"
+                className="rounded-xl border border-white/10 bg-slate-950/55 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300"
               />
               <input
                 name="email"
                 type="email"
-                placeholder="Your Email"
+                placeholder="Your email"
                 required
                 value={form.email}
                 onChange={handleChange}
-                className="px-4 py-3 rounded-xl border border-purple-100 dark:border-purple-700/60 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm"
+                className="rounded-xl border border-white/10 bg-slate-950/55 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300"
               />
               <textarea
                 name="message"
-                placeholder="Your Message"
+                placeholder="Project brief"
                 required
-                rows={5}
+                rows={6}
                 value={form.message}
                 onChange={handleChange}
-                className="px-4 py-3 rounded-xl border border-purple-100 dark:border-purple-700/60 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-400 text-sm resize-none"
+                className="resize-none rounded-xl border border-white/10 bg-slate-950/55 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300"
               />
               <MagneticButton className="block w-full">
                 <button
                   type="submit"
-                  className="w-full rounded-xl px-6 py-3 bg-purple-500 text-white hover:bg-purple-600 transition font-semibold text-sm cursor-hover"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-300 px-6 py-3 text-sm font-bold text-slate-950 transition hover:bg-white cursor-hover"
                 >
-                  Send Message
+                  Send inquiry
+                  <Send size={17} strokeWidth={1.8} />
                 </button>
               </MagneticButton>
             </form>

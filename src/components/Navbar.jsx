@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { MenuIcon, XIcon } from "../icons";
 
 export default function Navbar({ theme, setTheme }) {
@@ -31,29 +31,26 @@ export default function Navbar({ theme, setTheme }) {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/60 dark:bg-[#0f111a]/60 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center px-8 py-4">
+      <nav className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-slate-200/70 bg-white/70 px-5 py-4 backdrop-blur-xl dark:border-white/10 dark:bg-[#060814]/72 md:px-8">
         <img
           src="/images/logocj.png"
           alt="Logo"
-          className="w-10 h-10 rounded-full object-cover shadow-md cursor-pointer cursor-hover"
+          className="h-10 w-10 cursor-pointer rounded-full border border-slate-200 object-cover shadow-md dark:border-white/10 cursor-hover"
           onClick={() => scrollTo("home")}
         />
 
-        <div className="hidden md:flex gap-8 text-sm ml-auto mr-6">
+        <div className="ml-auto mr-6 hidden gap-2 rounded-full border border-slate-200/80 bg-white/55 p-1 text-sm dark:border-white/10 dark:bg-white/[0.04] md:flex">
           {links.map((link) => (
             <button
               key={link}
               onClick={() => scrollTo(link)}
-              className={`relative capitalize transition text-gray-800 dark:text-gray-200 cursor-hover ${
-                active === link ? "font-semibold" : "font-normal"
+              className={`rounded-full px-4 py-2 capitalize transition cursor-hover ${
+                active === link
+                  ? "bg-slate-950 font-semibold text-white dark:bg-cyan-300 dark:text-slate-950"
+                  : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/10"
               }`}
             >
               {link}
-              <span
-                className={`absolute left-0 -bottom-1 h-0.5 bg-purple-500 transition-all duration-300 ${
-                  active === link ? "w-full" : "w-0"
-                }`}
-              />
             </button>
           ))}
         </div>
@@ -61,7 +58,7 @@ export default function Navbar({ theme, setTheme }) {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 border border-purple-400/60 rounded-md hover:bg-purple-500 hover:text-white transition cursor-hover"
+            className="rounded-xl border border-slate-200 bg-white/50 p-2 text-slate-800 transition hover:bg-slate-950 hover:text-white dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-cyan-300 dark:hover:text-slate-950 cursor-hover"
             aria-label="Toggle theme"
           >
             {theme === "dark" ? (
@@ -72,7 +69,7 @@ export default function Navbar({ theme, setTheme }) {
           </button>
 
           <button
-            className="md:hidden text-gray-800 dark:text-gray-200 cursor-hover"
+            className="text-slate-800 dark:text-slate-200 md:hidden cursor-hover"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
@@ -82,15 +79,15 @@ export default function Navbar({ theme, setTheme }) {
       </nav>
 
       {menuOpen && (
-        <div className="fixed top-[65px] left-0 w-full z-40 bg-white/90 dark:bg-[#0f111a]/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 flex flex-col items-center py-6 gap-5 md:hidden transition-all duration-300 ease-in-out">
+        <div className="fixed left-0 top-[65px] z-40 flex w-full flex-col items-center gap-4 border-b border-slate-200 bg-white/95 py-6 backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-[#060814]/95 md:hidden">
           {links.map((link) => (
             <button
               key={link}
               onClick={() => scrollTo(link)}
-              className={`capitalize text-lg transition text-gray-800 dark:text-gray-200 cursor-hover ${
+              className={`capitalize text-lg transition cursor-hover ${
                 active === link
-                  ? "font-semibold text-purple-500"
-                  : "font-normal"
+                  ? "font-semibold text-cyan-600 dark:text-cyan-300"
+                  : "font-normal text-slate-800 dark:text-slate-200"
               }`}
             >
               {link}

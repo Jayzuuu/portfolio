@@ -1,95 +1,138 @@
 import { motion } from "framer-motion";
-import { Box, Monitor, Code2 } from "lucide-react";
+import { Box, Code2, Clapperboard, Layers3, PenTool, Workflow } from "lucide-react";
 import profilePic from "../assets/profilepic.jpg";
 
-const highlights = [
+const services = [
   {
     Icon: Box,
     title: "3D & Visualization",
-    tools: "Blender, SketchUp, D5 Render",
+    body: "Production-ready models, layouts, product scenes, and architectural visualizations for presentations and campaigns.",
   },
   {
-    Icon: Monitor,
-    title: "Design & Production",
-    tools: "Photoshop, Premiere Pro, After Effects",
+    Icon: Clapperboard,
+    title: "Motion & Video",
+    body: "Short-form content, promotional edits, motion graphics, event materials, and brand storytelling assets.",
   },
   {
     Icon: Code2,
-    title: "Development",
-    tools: "Unity, Web Dev, Game Dev",
+    title: "Interactive Builds",
+    body: "Unity games, app prototypes, web deployments, and workflow tools that connect creative output with real use.",
   },
+];
+
+const pipeline = [
+  { Icon: PenTool, label: "Concept", text: "brief, references, direction" },
+  { Icon: Layers3, label: "Production", text: "3D, design, edit, build" },
+  { Icon: Workflow, label: "Delivery", text: "export, polish, launch" },
 ];
 
 export default function About() {
   return (
     <section
       id="about"
-      className="min-h-screen w-full flex flex-col md:flex-row items-center justify-center px-8 md:px-20 gap-16 py-24 md:py-32 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300"
+      className="relative overflow-hidden bg-slate-50 px-6 py-24 text-slate-950 transition-colors duration-300 dark:bg-[#080b14] dark:text-white md:px-12 lg:px-20"
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="flex-1 flex flex-col justify-center max-w-lg"
-      >
-        <h2 className="text-4xl font-display font-bold text-purple-500">About Me</h2>
-        <div className="w-16 h-1 bg-purple-500 rounded mt-2 mb-8" />
-        <p className="text-lg text-gray-900 dark:text-gray-200 leading-relaxed mb-4">
-          I'm a <strong>Multimedia Specialist</strong> and Founder of{" "}
-          <strong>Zyphron Creative</strong> — a freelance multimedia studio
-          serving clients across 3D modeling, graphic design, video production,
-          and game development.
-        </p>
-        <p className="text-lg text-gray-900 dark:text-gray-200 leading-relaxed mb-8">
-          With experience in both corporate and freelance environments, I manage
-          full creative pipelines from concept to final output — blending
-          technical skill with visual storytelling.
-        </p>
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/50 to-transparent" />
+      <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-cyan-300/20 blur-3xl dark:bg-cyan-500/10" />
+      <div className="absolute bottom-20 left-0 h-80 w-80 rounded-full bg-violet-400/15 blur-3xl dark:bg-violet-600/15" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {highlights.map((card, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
-              className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl border border-purple-100/80 dark:border-purple-800/60 p-5 transition cursor-hover"
-            >
-              <card.Icon
-                size={22}
-                strokeWidth={1.75}
-                className="text-purple-500 mb-3"
-              />
-              <h3 className="font-semibold text-purple-500 text-sm mb-1">
-                {card.title}
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
-                {card.tools}
+      <div className="relative z-10 mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65 }}
+          viewport={{ once: true, margin: "-80px" }}
+          className="relative"
+        >
+          <div className="relative mx-auto aspect-[4/5] max-w-md overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-2xl shadow-slate-300/40 dark:border-white/10 dark:bg-white/5 dark:shadow-black/40">
+            <img
+              src={profilePic}
+              alt="Christian Jay Castro"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent p-6 text-white">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200">
+                Zyphron Creative
               </p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+              <h3 className="mt-2 font-display text-2xl font-bold">
+                Multimedia specialist with a 3D-first edge.
+              </h3>
+            </div>
+          </div>
+        </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="flex-1 flex justify-center items-center"
-      >
-        <div className="relative w-64 h-64 md:w-80 md:h-80">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 opacity-30 blur-2xl" />
-          <img
-            src={profilePic}
-            alt="Christian Jay Castro"
-            className="relative w-full h-full object-cover rounded-2xl shadow-xl border border-purple-500/30"
-          />
+        <div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65 }}
+            viewport={{ once: true, margin: "-80px" }}
+          >
+            <p className="text-sm font-bold uppercase tracking-[0.28em] text-cyan-600 dark:text-cyan-300">
+              About / Creative Direction
+            </p>
+            <h2 className="mt-4 max-w-3xl font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.95] tracking-normal">
+              I turn rough creative ideas into polished visual systems.
+            </h2>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+              I am a Multimedia Specialist and Founder of Zyphron Creative,
+              working across 3D modeling, graphic design, video production, game
+              development, and web systems. My sweet spot is the full creative
+              pipeline: understanding the brief, building the assets, polishing
+              the presentation, and shipping the final output.
+            </p>
+          </motion.div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {services.map((item, index) => (
+              <motion.article
+                key={item.title}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: index * 0.08 }}
+                viewport={{ once: true, margin: "-80px" }}
+                whileHover={{ y: -6 }}
+                className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/[0.04]"
+              >
+                <item.Icon
+                  size={24}
+                  strokeWidth={1.75}
+                  className="text-cyan-600 dark:text-cyan-300"
+                />
+                <h3 className="mt-5 font-display text-lg font-bold">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                  {item.body}
+                </p>
+              </motion.article>
+            ))}
+          </div>
+
+          <div className="mt-8 grid gap-3 rounded-2xl border border-slate-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/[0.035] md:grid-cols-3">
+            {pipeline.map((step, index) => (
+              <motion.div
+                key={step.label}
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.45, delay: index * 0.08 }}
+                viewport={{ once: true }}
+                className="flex items-center gap-3 rounded-xl px-3 py-2"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-950 text-cyan-200 dark:bg-cyan-300 dark:text-slate-950">
+                  <step.Icon size={18} strokeWidth={1.75} />
+                </span>
+                <span>
+                  <span className="block text-sm font-bold">{step.label}</span>
+                  <span className="block text-xs text-slate-500 dark:text-slate-400">
+                    {step.text}
+                  </span>
+                </span>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
