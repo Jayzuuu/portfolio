@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { BriefcaseBusiness, Download, GraduationCap, Trophy } from "lucide-react";
 import MagneticButton from "../components/MagneticButton";
+import { fadeUp, stagger, viewport } from "../lib/motion";
 
 const experience = [
   {
@@ -44,9 +45,7 @@ const experience = [
     title: "Graphic Artist / Video Editor Intern",
     company: "PESO - Admin Department",
     duration: "Jun - Nov 2024",
-    bullets: [
-      "Created promotional graphics and edited short-form video content for social media campaigns.",
-    ],
+    bullets: ["Created promotional graphics and edited short-form video content for social media campaigns."],
     img: "/images/logocj.png",
   },
   {
@@ -75,34 +74,32 @@ function TimelineEntry({ item, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay: index * 0.04 }}
       viewport={{ once: true, margin: "-80px" }}
-      className="relative grid gap-4 border-l border-slate-200 pb-10 pl-8 last:pb-0 dark:border-white/10 md:grid-cols-[0.22fr_0.78fr] md:gap-8"
+      className="relative grid gap-4 border-l border-white/10 pb-10 pl-8 last:pb-0 md:grid-cols-[0.24fr_0.76fr] md:gap-8"
     >
-      <span className="absolute -left-[18px] top-0 flex h-9 w-9 items-center justify-center rounded-full border-4 border-slate-50 bg-slate-950 text-cyan-200 dark:border-[#080b14] dark:bg-cyan-300 dark:text-slate-950">
+      <span className="absolute -left-[18px] top-0 flex h-9 w-9 items-center justify-center rounded-lg border-4 border-[#06070a] bg-cyan-100 text-slate-950">
         <Icon size={17} strokeWidth={1.8} />
       </span>
       <div>
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300">
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-100">
           {item.duration}
         </p>
       </div>
-      <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+      <div className="panel premium-card rounded-lg p-5">
         <div className="flex gap-4">
           <img
             src={item.img}
             alt={item.company}
-            className="h-12 w-12 shrink-0 rounded-2xl border border-slate-200 object-cover dark:border-white/10"
+            className="h-12 w-12 shrink-0 rounded-lg border border-white/10 object-cover"
           />
           <div>
-            <h3 className="font-display text-xl font-bold">{item.title}</h3>
-            <p className="mt-1 text-sm font-semibold text-slate-500 dark:text-slate-400">
-              {item.company}
-            </p>
+            <h3 className="font-display text-xl font-bold text-white">{item.title}</h3>
+            <p className="mt-1 text-sm font-semibold text-slate-400">{item.company}</p>
           </div>
         </div>
-        <ul className="mt-5 space-y-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+        <ul className="mt-5 space-y-2 text-sm leading-6 text-slate-300">
           {item.bullets.map((bullet) => (
             <li key={bullet} className="flex gap-3">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-500" />
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#f4c76b]" />
               <span>{bullet}</span>
             </li>
           ))}
@@ -114,33 +111,39 @@ function TimelineEntry({ item, index }) {
 
 export default function Resume() {
   return (
-    <section
-      id="resume"
-      className="relative overflow-hidden bg-slate-50 px-6 py-24 text-slate-950 transition-colors duration-300 dark:bg-[#080b14] dark:text-white md:px-12 lg:px-20"
-    >
-      <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-cyan-300/15 blur-3xl dark:bg-cyan-500/10" />
+    <section id="resume" className="relative overflow-hidden py-28">
+      <div className="hairline absolute left-1/2 top-0 h-px w-screen -translate-x-1/2" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(244,199,107,0.08),transparent_40%)]" />
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div className="section-shell relative z-10">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="flex flex-col justify-between gap-6 md:flex-row md:items-end"
+        >
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.28em] text-cyan-600 dark:text-cyan-300">
+            <motion.p variants={fadeUp} className="section-kicker">
               Experience
-            </p>
-            <h2 className="mt-4 max-w-3xl font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.95] tracking-normal">
-              Built in studios, offices, classrooms, and client work.
-            </h2>
+            </motion.p>
+            <motion.h2 variants={fadeUp} className="section-title mt-4 max-w-3xl">
+              Experience across corporate production, freelance delivery, and game development.
+            </motion.h2>
           </div>
+          <motion.div variants={fadeUp}>
           <MagneticButton>
             <a
               href="/resume/CJResume.pdf"
               download
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-slate-300/50 transition hover:bg-cyan-400 hover:text-slate-950 dark:bg-cyan-300 dark:text-slate-950 dark:shadow-black/30 dark:hover:bg-white cursor-hover"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-extrabold uppercase tracking-[0.12em] text-slate-950 shadow-xl shadow-black/30 transition hover:bg-[#f4c76b] cursor-hover"
             >
-              <Download size={18} strokeWidth={1.8} />
+              <Download size={18} strokeWidth={2} />
               Download resume
             </a>
           </MagneticButton>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div className="mt-14 grid gap-12 lg:grid-cols-[1fr_0.42fr]">
           <div>
@@ -154,13 +157,13 @@ export default function Resume() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
             viewport={{ once: true, margin: "-80px" }}
-            className="h-fit rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
+            className="panel premium-card h-fit rounded-lg p-6 lg:sticky lg:top-28"
           >
             <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-cyan-200 dark:bg-cyan-300 dark:text-slate-950">
+              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-100 text-slate-950">
                 <Trophy size={21} strokeWidth={1.8} />
               </span>
-              <h3 className="font-display text-2xl font-bold">Achievements</h3>
+              <h3 className="font-display text-2xl font-bold text-white">Achievements</h3>
             </div>
             <div className="mt-6 space-y-3">
               {achievements.map((achievement, index) => (
@@ -170,7 +173,7 @@ export default function Resume() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.45, delay: index * 0.06 }}
                   viewport={{ once: true }}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-300"
+                  className="rounded-lg border border-white/10 bg-white/[0.035] p-4 text-sm leading-6 text-slate-300"
                 >
                   {achievement}
                 </motion.div>

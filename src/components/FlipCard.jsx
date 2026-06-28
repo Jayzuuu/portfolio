@@ -20,7 +20,7 @@ export default function FlipCard() {
         {/* Front */}
         <div
           style={{ backfaceVisibility: "hidden" }}
-          className="absolute h-full w-full overflow-hidden rounded-2xl bg-slate-900 shadow-lg"
+          className="absolute h-full w-full overflow-hidden rounded-lg bg-slate-900 shadow-lg"
         >
           <img
             src="/projects/callingcard/frontpic.png"
@@ -33,7 +33,7 @@ export default function FlipCard() {
         {/* Back */}
         <div
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-          className="absolute h-full w-full overflow-hidden rounded-2xl bg-slate-900 shadow-lg"
+          className="absolute h-full w-full overflow-hidden rounded-lg bg-slate-900 shadow-lg"
         >
           <img
             src="/projects/callingcard/backpic.png"

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { BadgeCheck, Box, Code2, Megaphone, Palette } from "lucide-react";
+import { fadeUp, stagger, viewport } from "../lib/motion";
 
 const categories = [
   {
@@ -45,29 +46,33 @@ const stack = [
 
 export default function Skills() {
   return (
-    <section
-      id="skills"
-      className="relative overflow-hidden bg-slate-50 px-6 py-24 text-slate-950 transition-colors duration-300 dark:bg-[#080b14] dark:text-white md:px-12 lg:px-20"
-    >
-      <div className="absolute left-1/2 top-0 h-px w-screen -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-300/50 to-transparent" />
+    <section id="skills" className="relative overflow-hidden py-28">
+      <div className="hairline absolute left-1/2 top-0 h-px w-screen -translate-x-1/2" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(245deg,rgba(103,232,249,0.09),transparent_42%)]" />
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+      <div className="section-shell relative z-10">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="grid gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:items-end"
+        >
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.28em] text-cyan-600 dark:text-cyan-300">
+            <motion.p variants={fadeUp} className="section-kicker">
               Core Competencies
-            </p>
-            <h2 className="mt-4 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.95] tracking-normal">
-              Tools are the stack. Output is the point.
-            </h2>
+            </motion.p>
+            <motion.h2 variants={fadeUp} className="section-title mt-4">
+              A production stack for visuals that actually ship.
+            </motion.h2>
           </div>
-          <p className="max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-            The portfolio is built around hybrid production: visual thinking,
-            technical execution, and campaign delivery. That makes the work
-            useful for teams that need one person who can move from 3D and
-            design into interactive builds.
-          </p>
-        </div>
+          <motion.p variants={fadeUp} className="max-w-2xl text-lg leading-8 text-slate-300">
+            Hybrid production is the advantage: visual thinking, technical
+            execution, and campaign delivery in one workflow. The result is work
+            that can move from concept art to production asset to deployed
+            interactive experience.
+          </motion.p>
+        </motion.div>
 
         <div className="mt-12 grid gap-5 md:grid-cols-2">
           {categories.map((cat, index) => (
@@ -77,18 +82,16 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: index * 0.08 }}
               viewport={{ once: true, margin: "-80px" }}
-              whileHover={{ y: -6 }}
-              className="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/[0.04]"
+              whileHover={{ y: -6, scale: 1.01 }}
+              className="panel premium-card rounded-lg p-6"
             >
               <div className="flex items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-cyan-200 dark:bg-cyan-300 dark:text-slate-950">
-                  <cat.Icon size={22} strokeWidth={1.75} />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white text-slate-950">
+                  <cat.Icon size={22} strokeWidth={1.8} />
                 </span>
                 <div>
-                  <h3 className="font-display text-2xl font-bold">{cat.label}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                    {cat.summary}
-                  </p>
+                  <h3 className="font-display text-2xl font-bold text-white">{cat.label}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-400">{cat.summary}</p>
                 </div>
               </div>
 
@@ -96,9 +99,9 @@ export default function Skills() {
                 {cat.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:border-white/10 dark:text-slate-200"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs font-semibold text-slate-200"
                   >
-                    <BadgeCheck size={13} strokeWidth={2} className="text-cyan-500" />
+                    <BadgeCheck size={13} strokeWidth={2} className="text-cyan-100" />
                     {skill}
                   </span>
                 ))}
@@ -112,13 +115,13 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true, margin: "-80px" }}
-          className="mt-10 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-950 py-4 text-white dark:border-white/10"
+          className="panel premium-card mt-10 overflow-hidden rounded-lg py-4"
         >
           <div className="flex animate-marquee gap-4 whitespace-nowrap">
             {[...stack, ...stack].map((item, index) => (
               <span
                 key={`${item}-${index}`}
-                className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-cyan-100"
+                className="rounded-full border border-white/10 bg-white/[0.035] px-4 py-2 text-sm font-bold text-cyan-100"
               >
                 {item}
               </span>

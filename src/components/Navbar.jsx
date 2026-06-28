@@ -1,100 +1,137 @@
 import { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
-import { MenuIcon, XIcon } from "../icons";
+import { motion, AnimatePresence } from "framer-motion";
+import { Download, Menu, X } from "lucide-react";
 
-export default function Navbar({ theme, setTheme }) {
+const links = ["home", "about", "projects", "skills", "resume", "contact"];
+
+export default function Navbar() {
   const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const sections = document.querySelectorAll("section");
+    const sections = document.querySelectorAll("section[id]");
     const handleScroll = () => {
       let current = "home";
       sections.forEach((sec) => {
-        const top = window.scrollY;
-        const offset = sec.offsetTop - 150;
-        const height = sec.offsetHeight;
-        if (top >= offset && top < offset + height) current = sec.id;
+        const offset = sec.offsetTop - 170;
+        if (window.scrollY >= offset) current = sec.id;
       });
       setActive(current);
+      setScrolled(window.scrollY > 24);
     };
-    window.addEventListener("scroll", handleScroll);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollTo = (id) => {
-    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
   };
 
-  const links = ["home", "about", "projects", "skills", "resume", "contact"];
-
   return (
     <>
-      <nav className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-slate-200/70 bg-white/70 px-5 py-4 backdrop-blur-xl dark:border-white/10 dark:bg-[#060814]/72 md:px-8">
-        <img
-          src="/images/logocj.png"
-          alt="Logo"
-          className="h-10 w-10 cursor-pointer rounded-full border border-slate-200 object-cover shadow-md dark:border-white/10 cursor-hover"
-          onClick={() => scrollTo("home")}
-        />
-
-        <div className="ml-auto mr-6 hidden gap-2 rounded-full border border-slate-200/80 bg-white/55 p-1 text-sm dark:border-white/10 dark:bg-white/[0.04] md:flex">
-          {links.map((link) => (
-            <button
-              key={link}
-              onClick={() => scrollTo(link)}
-              className={`rounded-full px-4 py-2 capitalize transition cursor-hover ${
-                active === link
-                  ? "bg-slate-950 font-semibold text-white dark:bg-cyan-300 dark:text-slate-950"
-                  : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/10"
-              }`}
-            >
-              {link}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-3">
+      <motion.nav
+        initial={{ opacity: 0, x: "-50%", y: -16 }}
+        animate={{ opacity: 1, x: "-50%", y: 0 }}
+        transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed left-1/2 top-4 z-50 w-[calc(100%-1rem)] max-w-[1200px]"
+      >
+        <div
+          className={`panel flex items-center justify-between rounded-lg px-3 py-3 transition duration-300 md:px-4 ${
+            scrolled ? "bg-[#060a12]/86 shadow-2xl shadow-black/35" : "bg-white/[0.035]"
+          }`}
+        >
           <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-xl border border-slate-200 bg-white/50 p-2 text-slate-800 transition hover:bg-slate-950 hover:text-white dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-cyan-300 dark:hover:text-slate-950 cursor-hover"
-            aria-label="Toggle theme"
+            onClick={() => scrollTo("home")}
+            className="group flex min-w-0 items-center gap-3 text-left cursor-hover"
+            aria-label="Go to home"
           >
-            {theme === "dark" ? (
-              <Sun size={18} strokeWidth={1.75} />
-            ) : (
-              <Moon size={18} strokeWidth={1.75} />
-            )}
+            <img
+              src="/images/logocj.png"
+              alt="Christian Jay Castro logo"
+              className="h-10 w-10 shrink-0 rounded-lg border border-white/10 object-cover"
+            />
+            <span className="hidden leading-none sm:block">
+              <span className="block text-sm font-bold text-white">Christian Jay Castro</span>
+              <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.16em] text-cyan-100/75">
+                Multimedia Specialist
+              </span>
+            </span>
           </button>
 
-          <button
-            className="text-slate-800 dark:text-slate-200 md:hidden cursor-hover"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? <XIcon /> : <MenuIcon />}
-          </button>
-        </div>
-      </nav>
+          <div className="hidden items-center gap-1 rounded-lg border border-white/10 bg-white/[0.035] p-1 md:flex">
+            {links.map((link) => (
+              <button
+                key={link}
+                onClick={() => scrollTo(link)}
+                className={`relative rounded-lg px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition cursor-hover ${
+                  active === link
+                    ? "text-slate-950"
+                    : "text-slate-300 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                {active === link && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute inset-0 rounded-lg bg-cyan-100 shadow-lg shadow-cyan-950/30"
+                    transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{link}</span>
+              </button>
+            ))}
+          </div>
 
-      {menuOpen && (
-        <div className="fixed left-0 top-[65px] z-40 flex w-full flex-col items-center gap-4 border-b border-slate-200 bg-white/95 py-6 backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-white/10 dark:bg-[#060814]/95 md:hidden">
-          {links.map((link) => (
-            <button
-              key={link}
-              onClick={() => scrollTo(link)}
-              className={`capitalize text-lg transition cursor-hover ${
-                active === link
-                  ? "font-semibold text-cyan-600 dark:text-cyan-300"
-                  : "font-normal text-slate-800 dark:text-slate-200"
-              }`}
+          <div className="flex items-center gap-2">
+            <a
+              href="/resume/CJResume.pdf"
+              download
+              className="hidden items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-slate-950 transition hover:bg-[#f4c76b] cursor-hover sm:inline-flex"
             >
-              {link}
+              <Download size={15} strokeWidth={2} />
+              Resume
+            </a>
+            <button
+              onClick={() => setMenuOpen((value) => !value)}
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-white transition hover:bg-white/10 cursor-hover md:hidden"
+              aria-label="Toggle navigation"
+            >
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-          ))}
+          </div>
         </div>
-      )}
+      </motion.nav>
+
+      <AnimatePresence>
+        {menuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -10, scale: 0.98 }}
+          transition={{ duration: 0.22 }}
+          className="fixed inset-x-3 top-[82px] z-40 rounded-lg border border-white/10 bg-[#060a12]/95 p-3 shadow-2xl shadow-black/40 backdrop-blur-xl md:hidden"
+        >
+          <div className="grid gap-1">
+            {links.map((link) => (
+              <button
+                key={link}
+                onClick={() => scrollTo(link)}
+                className={`rounded-lg px-4 py-3 text-left text-sm font-bold uppercase tracking-[0.16em] transition cursor-hover ${
+                  active === link
+                    ? "bg-cyan-100 text-slate-950"
+                    : "text-slate-200 hover:bg-white/10"
+                }`}
+              >
+                {link}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

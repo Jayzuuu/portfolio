@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Lenis from "lenis";
 import Navbar from "./components/Navbar";
@@ -14,23 +14,22 @@ import Resume from "./sections/Resume";
 import Contact from "./sections/Contact";
 
 export default function App() {
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "light"
-  );
-
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
 
-  useEffect(() => {
     const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    let frameId;
+
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      frameId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+
+    frameId = requestAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(frameId);
+      lenis.destroy();
+    };
   }, []);
 
   return (
@@ -38,12 +37,12 @@ export default function App() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen bg-slate-50 font-sans text-slate-950 transition-colors duration-300 dark:bg-[#080b14] dark:text-white"
+      className="min-h-screen overflow-hidden bg-[#06070a] font-sans text-slate-50 antialiased"
     >
       <GrainOverlay />
       <CustomCursor />
       <ScrollProgress />
-      <Navbar theme={theme} setTheme={setTheme} />
+      <Navbar />
       <Home />
       <About />
       <Projects />

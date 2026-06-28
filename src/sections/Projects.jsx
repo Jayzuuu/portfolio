@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Filter, X } from "lucide-react";
 import FlipCard from "../components/FlipCard";
+import { fadeUp, stagger, viewport } from "../lib/motion";
 
 const filters = ["All", "3D", "Game Dev", "Graphic Design", "App Dev", "Video"];
 
@@ -60,58 +61,66 @@ export default function Projects() {
       : projects.filter((p) => p.tags.includes(activeFilter));
 
   return (
-    <section
-      id="projects"
-      className="relative overflow-hidden bg-[#060814] px-6 py-24 text-white md:px-12 lg:px-20"
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(168,85,247,0.18),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.16),transparent_26%)]" />
+    <section id="projects" className="relative overflow-hidden py-28">
+      <div className="hairline absolute left-1/2 top-0 h-px w-screen -translate-x-1/2" />
+      <div className="fine-grid pointer-events-none absolute inset-0 opacity-40" />
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+      <div className="section-shell relative z-10">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="flex flex-col justify-between gap-8 md:flex-row md:items-end"
+        >
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.28em] text-cyan-300">
+            <motion.p variants={fadeUp} className="section-kicker">
               Selected Work
-            </p>
-            <h2 className="mt-4 max-w-3xl font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.95] tracking-normal">
-              Projects that show the full range.
-            </h2>
+            </motion.p>
+            <motion.h2 variants={fadeUp} className="section-title mt-4 max-w-3xl">
+              Selected projects across games, 3D visualization, apps, and campaigns.
+            </motion.h2>
           </div>
 
-          <div className="flex max-w-xl flex-wrap gap-2">
+          <motion.div variants={fadeUp} className="panel flex max-w-xl flex-wrap gap-2 rounded-lg p-2">
+            <span className="flex items-center gap-2 px-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+              <Filter size={14} />
+              Filter
+            </span>
             {filters.map((f) => (
               <button
                 key={f}
                 onClick={() => setActiveFilter(f)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition cursor-hover ${
+                className={`rounded-lg px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition cursor-hover ${
                   activeFilter === f
-                    ? "bg-cyan-300 text-slate-950"
-                    : "border border-white/15 bg-white/[0.03] text-slate-300 hover:border-cyan-200/50 hover:text-white"
+                    ? "bg-cyan-100 text-slate-950 shadow-lg shadow-cyan-950/30"
+                    : "text-slate-300 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 {f}
               </button>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65 }}
           viewport={{ once: true, margin: "-80px" }}
-          className="mt-12 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]"
+          className="mt-12 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]"
         >
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur">
+          <div className="panel premium-card rounded-lg p-5">
             <div className="mb-5 flex items-center justify-between gap-4">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[0.22em] text-cyan-200">
-                  Featured identity
+                <span className="text-xs font-bold uppercase tracking-[0.22em] text-[#f4c76b]">
+                  Brand artifact
                 </span>
-                <h3 className="mt-2 font-display text-2xl font-bold">
+                <h3 className="mt-2 font-display text-2xl font-bold text-white">
                   Calling Card Design
                 </h3>
               </div>
-              <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">
+              <span className="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-slate-300">
                 tap to flip
               </span>
             </div>
@@ -120,7 +129,7 @@ export default function Projects() {
             </div>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2">
             <AnimatePresence mode="popLayout">
               {filtered.map((p, i) => (
                 <motion.article
@@ -132,39 +141,41 @@ export default function Projects() {
                   transition={{ duration: 0.35, delay: i * 0.03 }}
                   whileHover={{ y: -7 }}
                   onClick={() => setSelected(p)}
-                  className={`group cursor-pointer overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.045] shadow-2xl shadow-black/15 backdrop-blur transition hover:border-cyan-200/35 cursor-hover ${
+                  className={`group panel premium-card cursor-pointer overflow-hidden rounded-lg transition hover:border-cyan-100/40 cursor-hover ${
                     i === 0 ? "sm:col-span-2" : ""
                   }`}
                 >
-                  <div className={`${i === 0 ? "h-72" : "h-48"} overflow-hidden`}>
+                  <div className={`${i === 0 ? "h-72" : "h-52"} relative overflow-hidden`}>
                     <img
                       src={p.image}
                       alt={p.title}
                       className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                     />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <h3 className="font-display text-xl font-bold">{p.title}</h3>
-                      <ArrowUpRight
-                        size={20}
-                        strokeWidth={1.8}
-                        className="shrink-0 text-cyan-200 transition group-hover:translate-x-1 group-hover:-translate-y-1"
-                      />
-                    </div>
-                    <p className="mt-2 text-sm leading-6 text-slate-300">
-                      {p.desc}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#06070a]/88 via-transparent to-transparent" />
+                    <div className="absolute left-4 top-4 flex flex-wrap gap-2">
                       {p.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-white/10 px-3 py-1 text-xs text-cyan-100"
+                          className="rounded-full border border-white/10 bg-black/35 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-cyan-100 backdrop-blur"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
+                  </div>
+                  <div className="p-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="font-display text-xl font-bold text-white">{p.title}</h3>
+                      <ArrowUpRight
+                        size={20}
+                        strokeWidth={1.9}
+                        className="shrink-0 text-cyan-100 transition group-hover:translate-x-1 group-hover:-translate-y-1"
+                      />
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-slate-400">{p.desc}</p>
+                    <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-[#f4c76b]">
+                      {p.impact}
+                    </p>
                   </div>
                 </motion.article>
               ))}
@@ -180,18 +191,18 @@ export default function Projects() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelected(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/82 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#020406]/86 p-4 backdrop-blur-md"
           >
             <motion.div
               initial={{ scale: 0.94, opacity: 0, y: 18 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.94, opacity: 0, y: 18 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-[1.5rem] border border-white/10 bg-[#080b14] shadow-2xl"
+              className="panel relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-lg"
             >
               <button
                 onClick={() => setSelected(null)}
-                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-950 transition hover:bg-cyan-200 cursor-hover"
+                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-lg bg-white text-slate-950 transition hover:bg-[#f4c76b] cursor-hover"
                 aria-label="Close project preview"
               >
                 <X size={19} strokeWidth={2} />
@@ -199,23 +210,21 @@ export default function Projects() {
               <img
                 src={selected.image}
                 alt={selected.title}
-                className="max-h-[460px] w-full object-cover"
+                className="max-h-[470px] w-full object-cover"
               />
               <div className="p-6 md:p-8">
-                <p className="text-sm font-bold uppercase tracking-[0.22em] text-cyan-300">
+                <p className="text-sm font-bold uppercase tracking-[0.22em] text-cyan-100">
                   {selected.impact}
                 </p>
                 <h3 className="mt-3 font-display text-3xl font-bold text-white">
                   {selected.title}
                 </h3>
-                <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-                  {selected.desc}
-                </p>
+                <p className="mt-4 max-w-2xl leading-7 text-slate-300">{selected.desc}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {selected.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border border-white/10 px-3 py-1 text-sm text-cyan-100"
+                      className="rounded-full border border-white/10 px-3 py-1 text-sm font-semibold text-cyan-100"
                     >
                       {tag}
                     </span>
